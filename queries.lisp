@@ -1,6 +1,4 @@
-;;;; mpd.lisp
-
-(in-package #:mpd)
+;; Classes
 
 (defclass song ()
   ((filename :initarg :filename :accessor filename)
@@ -50,45 +48,9 @@
    (db-playtime :initarg :db-playtime :accessor db-playtime)
    (db-update :initarg :db-update :accessor db-update)))
 
-(defun response->plist (response)
-  "Creates a parameter list from a MPD response string. Since MPD returns items
-  in the format 'type: content' it can be converted to a parameter list easily
-  by interning the type and storing content as a string."
-  (loop for line in response
-     for item = (split-sequence:split-sequence #\colon line)
-     collect (intern (string-upcase (first item)))
-     collect (string-left-trim '(#\Space) (second item))))
-
-(defun initialize-connection (address port)
-  "Connects to the MPD address and returns both the socket and the MPD version."
-  (let ((socket (make-socket :connect :active
-                             :address-family :internet
-                             :type :stream
-                             :external-format '(:utf-8 :eol-style :crlf)
-                             :ipv6 nil))
-        (welcome "OK MPD "))
-    (connect socket (lookup-hostname address) :port port :wait t)
-    (values socket (string-left-trim welcome (read-line socket)))))
-
-(defun close-connection (socket)
-  "Closes the connection."
-  (shutdown socket :write t :read t))
-
-(defun receive-command (socket)
-  "Reads from a socket until 'OK' is reached."
-  (loop for line = (read-line socket nil)
-     until (and (length= line 2) (string= "OK" line))
-     collect line))
-
-(defun send-command (command socket)
-  "Sends a command to a socket and return the reply."
-  (format socket "~A~%" command)
-  (force-output socket)
-  (receive-command socket))
-
 (defun current-song (socket)
   "Returns an instance of the current song."
-  (let ((song (response->plist (send-command "currentsong" socket))))
+  (let ((song (response->plist (send-command socket "currentsong"))))
     (make-instance 'song
                    :filename      (getf song 'file)
                    :last-modified (getf song 'last-modified)
@@ -110,7 +72,7 @@
 
 (defun status (socket)
   "Returns an instance of the current status."
-  (let ((status (response->plist (send-command "status" socket))))
+  (let ((status (response->plist (send-command socket "status"))))
     (make-instance 'status
                    :volume          (getf status 'volume)
                    :repeatp         (getf status 'repeatp)
@@ -133,7 +95,7 @@
 
 (defun statistics (socket)
   "Returns an instance of the current statistics."
-  (let ((stats (response->plist (send-command "stats" socket))))
+  (let ((stats (response->plist (send-command socket "stats"))))
     (make-instance 'statistics
                    :uptime      (getf stats 'uptime)
                    :play-time   (getf stats 'play-time)

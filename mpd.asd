@@ -7,4 +7,4 @@
   :depends-on (#:iolib #:split-sequence)
   :serial t
   :components ((:file "package")
-               (:file "mpd")))
+               (:file "connection")))
