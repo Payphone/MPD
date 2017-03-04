@@ -1,68 +1,101 @@
 ;;; playlist.lisp
 
 (defpackage #:mpd.playlist
-  (:use #:cl #:mpd.connection))
+  (:use #:cl #:mpd.connection)
+  (:export #:playlist-add-song
+           #:playlist-add-song-id
+           #:playlist-clear-songs
+           #:playlist-delete-song
+           #:playlist-delete-song-id
+           #:playlist-move
+           #:playlist-move-song-id
+           #:playlist-songs
+           #:playlist-find-song
+           #:playlist-song-id
+           #:playlist-song-info
+           #:playlist-search-song
+           #:playlist-changes-song
+           #:playlist-changes-position-id
+           #:playlist-priority
+           #:playlist-priority-id
+           #:playlist-range-id
+           #:playlist-shuffle
+           #:playlist-swap
+           #:playlist-swap-id
+           #:playlist-add-tag-id
+           #:playlist-clear-tag-id
+           #:playlist-list-songs
+           #:playlist-list-info
+           #:playlist-list-playlists
+           #:playlist-load
+           #:playlist-add
+           #:playlist-clear
+           #:playlist-delete
+           #:playlist-move
+           #:playlist-rename
+           #:playlist-remove
+           #:playlist-save))
 
 (in-package :mpd.playlist)
 
 ;; Current Playlist
 
-(defun playlist-add (socket uri)
+(defun playlist-add-song (socket uri)
   "Adds the file URI to the playlist (directories add recursively). URI can also
   be a single file."
   (send-command socket "add" uri))
 
-(defun playlist-add-id (socket uri &optional position)
+(defun playlist-add-song-id (socket uri &optional position)
   "Adds a song to the playlist (non-recursive) and returns the song id."
   (send-command socket "addid" uri (or position "")))
 
-(defun playlist-clear (socket)
+(defun playlist-clear-songs (socket)
   "Clears the current playlist."
   (send-command socket "clear"))
 
-(defun playlist-delete (socket position)
+(defun playlist-delete-song (socket position)
   "Deletes a song from the playlist. Position can either be a file or
   a range start:end."
   (send-command socket "delete" position))
 
-(defun playlist-delete-id (socket song-id)
+(defun playlist-delete-song-id (socket song-id)
   "Deletes the song song-id from the playlist."
   (send-command socket "deleteid" song-id))
 
-(defun playlist-move (socket from to)
+(defun playlist-move-song (socket from to)
   "Moves the song at FROM or range of songs at START:END to TO in the playlist."
   (send-command socket "move" from to))
 
-(defun playlist-move-id (socket from to)
+(defun playlist-move-song-id (socket from to)
   "Moves the song with FROM (songid) to TO (playlist index) in the playlist. If
   TO is negative, it is relative to the current song in the playlist (if there
   is one)."
   (send-command socket "moveid" from to))
 
-(defun playlist (socket)
+(defun playlist-songs (socket)
   "Displays the current playlist."
   (send-command socket "playlist"))
 
-(defun playlist-find (socket tag needle)
+(defun playlist-find-song (socket tag needle)
   "Finds songs in the current playlist with strict matching."
   (send-command socket "find" tag needle))
 
-(defun playlist-id (socket song-id)
+(defun playlist-song-id (socket song-id)
   "Displays a list of songs in the playlist. song-id is optional and specifies a
   single song to display info for."
   (send-command socket "playlistid" song-id))
 
-(defun playlist-info (socket position)
+(defun playlist-song-info (socket position)
   "Displays a list of all songs in the playlist, or if the optional argument is
   given, displays information only for the song SONGPOS or the range of songs
   START:END."
   (send-command socket "playlistinfo" position))
 
-(defun playlist-search (socket tag needle)
+(defun playlist-search-song (socket tag needle)
   "Searches case-insensitively for partial matches in the current playlist."
   (send-command socket "playlistsearch" tag needle))
 
-(defun playlist-changes (socket version &optional positions)
+(defun playlist-changes-song (socket version &optional positions)
   "Displays changed songs currently in the playlist since VERSION. Start and end
   positions may be given to limit the output to changes in the given range."
   (send-command socket "plchanges" version (or positions "")))
@@ -115,7 +148,7 @@
 ;; Stored Playlists
 
 (defun playlist-list-songs (socket name)
-  "Lists the songs in the playlist. Playlist plugins are supported."
+  "Lists the songs in the playlist."
   (send-command socket "listplaylist" name))
 
 (defun playlist-list-info (socket name)
