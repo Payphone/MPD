@@ -3,12 +3,12 @@
 DONE:
   * Connection settings
   * Playback
+  * Playlist
 
 IN-PROGRESS:
-  * Playlist
+  * Database
 
 TODO:
-  * Playlist
   * Database
   * Mounts and neighbors
   * Stickers

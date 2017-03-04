@@ -74,7 +74,7 @@
   (send-command socket "plchangesposid" version (or positions "")))
 
 (defun playlist-priority (socket priority &rest positions)
-  (send-command socket "prio" priority (format nil "~{A ~}" positions)))
+  (send-command socket "prio" priority (format nil "~{~A ~}" positions)))
 
 (defun playlist-priority-id (socket priority &rest ids)
   "Same as priority, but address the songs with their id."
@@ -85,7 +85,7 @@
   offsets in seconds (fractional seconds allowed); both are optional. Omitting
   both (i.e. sending just ':') means 'remove the range, play everything'. A song
   that is currently playing cannot be manipulated this way."
-  (send-command socket "rangeid" id (format nil "~{~A }" positions)))
+  (send-command socket "rangeid" id (format nil "~{~A ~}" positions)))
 
 (defun playlist-shuffle (socket &optional positions)
   "Shuffles the current playlist. START:END is optional and specifies a range of
