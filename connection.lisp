@@ -22,6 +22,10 @@
 
 (in-package :mpd.connection)
 
+(defun emptyp (sequence)
+  "Returns t if the sequence is empty."
+  (if (= (length sequence) 0) t))
+
 (defun response->plist (response)
   "Creates a parameter list from a MPD response string. Since MPD returns items
   in the format 'type: content\n' it can be converted to a parameter list easily
@@ -30,6 +34,21 @@
      for item = (split-sequence:split-sequence #\colon line)
      collect (intern (string-upcase (first item)))
      collect (string-left-trim '(#\Space) (second item))))
+
+(defun response->error (error-response)
+  "Generates a Common Lisp error from a MPD error. MPD errors are in the format
+  'ACK [error@command_listNum] {current_command} message_text'."
+  (let* ((response (split-sequence:split-sequence #\Space error-response))
+         (error-line
+          (split-sequence:split-sequence #\@ (string-trim '(#\[ #\])
+                                                          (nth 1 response))))
+         (error-number (first error-line))
+         (command-list-number (second error-line))
+         (current-command (string-trim '(#\{ #\}) (nth 2 response)))
+         (error-message (format nil "~{~A ~}" (nthcdr 3 response))))
+    (error "MPD error ~A at line ~A with current command ~A: ~A" error-number
+           command-list-number (if (emptyp current-command) nil current-command)
+           error-message)))
 
 (defun initialize-connection (address port)
   "Connects to the MPD address and returns both the socket and the MPD version."
@@ -56,7 +75,7 @@
                           (if acc (values acc 'OK) 'OK)
                           acc))
 
-                     ((string= "ACK" (subseq line 0 3)) (cons line acc))
+                     ((string= "ACK" (subseq line 0 3)) (response->error line))
                      (t (rec socket (cons line acc)))))))
     (rec socket nil)))
 
