@@ -1,6 +1,9 @@
 ;;; playlist.lisp
 
-(in-package :mpd)
+(defpackage #:mpd.playlist
+  (:use #:cl #:mpd.connection))
+
+(in-package :mpd.playlist)
 
 ;; Current Playlist
 
