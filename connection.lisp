@@ -28,7 +28,7 @@
     (password       . 3)
     (permission     . 4)
     (unknown        . 5)
-    (no-exist       . 0)
+    (no-exist       . 50)
     (playlist-max   . 51)
     (system         . 52)
     (playlist-load  . 53)
@@ -95,11 +95,11 @@
                      (t (rec socket (cons line acc)))))))
     (rec socket nil)))
 
-(defun send-command (socket command &key (include-ok t))
+(defun send-command (socket command &rest arguments)
   "Sends a command to a socket and returns the reply."
-  (format socket "~A~%" command)
+  (format socket "~A ~{~A ~}~%" command arguments)
   (force-output socket)
-  (receive-command socket :include-ok include-ok))
+  (receive-command socket))
 
 (defun send-commands (socket &rest commands)
   "Sends a batch of commands and returns the reply."
@@ -114,11 +114,11 @@
 (defun password (socket password)
   "This is used for authentication with the server. PASSWORD is simply the
   plaintext password."
-  (send-command socket (format nil "password ~A" password)))
+  (send-command socket "password" password))
 
 (defun ping (socket)
   "Returns 't' if successful ping."
-  (send-command socket "ping" :include-ok t))
+  (send-command socket "ping"))
 
 (defun tagtypes (socket)
   "Shows a list of available tag types."
@@ -127,12 +127,12 @@
 (defun tagtypes-disable (socket &rest tags)
   "Remove one or more tags from the list of tag types the client is interested
   in. These will be omitted from responses to this client."
-  (send-command socket (format nil "tagtypes disable ~{~A ~}" tags)))
+  (send-command socket "tagtypes disable" (format nil "~{~A ~}" tags)))
 
 (defun tagtypes-enable (socket &rest tags)
   "Re-enable one or more tags from the list of tag types for this client. These
   will no longer be hidden from responses to this client."
-  (send-command socket (format nil "tagtypes enable ~{~A ~}" tags)))
+  (send-command socket "tagtypes enable" (format nil "~{~A ~}" tags)))
 
 (defun tagtypes-clear (socket)
   "Clear the list of tag types this client is interested in. This means that MPD
@@ -147,7 +147,7 @@
   "Waits until there is a noteworthy change on one or more of MPD's subsystems,
   and returns the change as a parameter list."
   (response->plist
-   (send-command socket (format nil "idle ~{~A ~}" subsystems))))
+   (send-command socket "idle" (format nil "~{~A ~}" subsystems))))
 
 (defun clear-error (socket)
   "Clears the current error message in status."
