@@ -22,6 +22,23 @@
 
 (in-package :mpd.connection)
 
+(defconstant *mpd-errors*
+  '((not-list       . 1)
+    (arg            . 2)
+    (password       . 3)
+    (permission     . 4)
+    (unknown        . 5)
+    (no-exist       . 0)
+    (playlist-max   . 51)
+    (system         . 52)
+    (playlist-load  . 53)
+    (update-already . 54)
+    (player-sync    . 55)
+    (exist          . 56)))
+
+(defun lookup-error-code (code)
+  (car (rassoc code *mpd-errors*)))
+
 (defun emptyp (sequence)
   "Returns t if the sequence is empty."
   (if (= (length sequence) 0) t))
@@ -42,7 +59,7 @@
          (error-line
           (split-sequence:split-sequence #\@ (string-trim '(#\[ #\])
                                                           (nth 1 response))))
-         (error-number (first error-line))
+         (error-number (lookup-error-code (parse-integer (first error-line))))
          (command-list-number (second error-line))
          (current-command (string-trim '(#\{ #\}) (nth 2 response)))
          (error-message (format nil "~{~A ~}" (nthcdr 3 response))))
@@ -74,7 +91,6 @@
                       (if include-ok
                           (if acc (values acc 'OK) 'OK)
                           acc))
-
                      ((string= "ACK" (subseq line 0 3)) (response->error line))
                      (t (rec socket (cons line acc)))))))
     (rec socket nil)))
