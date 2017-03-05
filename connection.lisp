@@ -63,7 +63,7 @@
          (command-list-number (second error-line))
          (current-command (string-trim '(#\{ #\}) (nth 2 response)))
          (error-message (format nil "~{~A ~}" (nthcdr 3 response))))
-    (error "MPD error ~A at line ~A with current command ~A: ~A" error-number
+    (error "MPD error ~A at line ~A with command '~A': ~A" error-number
            command-list-number (if (emptyp current-command) nil current-command)
            error-message)))
 

@@ -9,4 +9,5 @@
   :components ((:file "connection")
                (:file "playback")
                (:file "playlist")
+               (:file "database")
                (:file "package")))
