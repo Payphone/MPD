@@ -4,11 +4,6 @@ DONE:
   * Connection settings
   * Playback
   * Playlist
-
-IN-PROGRESS:
-  * Database
-
-TODO:
   * Database
   * Mounts and neighbors
   * Stickers
@@ -16,5 +11,8 @@ TODO:
   * Audio output
   * Reflection
   * Client to client
+
+TODO:
+  * Clean up
   * Fix connection tagtypes
   * Testing
