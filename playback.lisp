@@ -7,7 +7,7 @@
            #:playback-mixrampdb
            #:playback-mixrampdelay
            #:playback-random
-           #:playback-setvol
+           #:playback-set-volume
            #:playback-single
            #:replay-gain-mode
            #:replay-gain-status
@@ -56,7 +56,7 @@
   "Sets the random state to t or nil."
   (send-command socket "random" (boolean->binary state)))
 
-(defun playback-setvol (socket volume)
+(defun playback-set-volume (socket volume)
   "Sets the volume, the range of volume is 0-100."
   (send-command socket "random" volume))
 

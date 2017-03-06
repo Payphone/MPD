@@ -22,7 +22,7 @@
 
 (in-package :mpd.connection)
 
-(defconstant *mpd-errors*
+(defparameter *mpd-errors*
   '((not-list       . 1)
     (arg            . 2)
     (password       . 3)
