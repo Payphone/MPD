@@ -54,7 +54,7 @@
            #:playlist-delete-song-id
            #:playlist-move
            #:playlist-move-song-id
-           #:playlist-songs
+           #:playlist-song-list
            #:playlist-find-song
            #:playlist-song-id
            #:playlist-song-info
@@ -96,6 +96,58 @@
            #:database-search-add-playlist
            #:database-update
            #:database-rescan
+
+           ;; Query
+           #:song
+           #:filename
+           #:last-modified
+           #:artist
+           #:album-artist
+           #:title
+           #:album
+           #:track
+           #:date
+           #:composer
+           #:performer
+           #:comment
+           #:genre
+           #:disc
+           #:current-time
+           #:duration
+           #:position
+           #:id
+           #:current-song
+
+           #:status
+           #:volume
+           #:repeatp
+           #:randomp
+           #:singlep
+           #:consumep
+           #:playlist
+           #:playlist-length
+           #:mix-ramp-db
+           #:state
+           #:song
+           #:song-id
+           #:current-time
+           #:elapsed
+           #:bitrate
+           #:duration
+           #:audio
+           #:next-song
+           #:next-song-id
+           #:status
+
+           #:statistics
+           #:uptime
+           #:play-time
+           #:artist
+           #:albums
+           #:songs
+           #:db-playtime
+           #:db-update
+           #:statistics
 
            ;; Misc
            #:mount

@@ -10,5 +10,6 @@
                (:file "playback")
                (:file "playlist")
                (:file "database")
+               (:file "query")
                (:file "misc")
                (:file "package")))

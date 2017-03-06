@@ -1,3 +1,55 @@
+(defpackage #:mpd.query
+  (:use #:cl #:mpd.connection)
+  (:export #:song
+           #:filename
+           #:last-modified
+           #:artist
+           #:album-artist
+           #:title
+           #:album
+           #:track
+           #:date
+           #:composer
+           #:performer
+           #:comment
+           #:genre
+           #:disc
+           #:current-time
+           #:duration
+           #:position
+           #:id
+           #:current-song
+
+           #:status
+           #:volume
+           #:repeatp
+           #:randomp
+           #:singlep
+           #:consumep
+           #:playlist
+           #:playlist-length
+           #:mix-ramp-db
+           #:state
+           #:song
+           #:song-id
+           #:current-time
+           #:elapsed
+           #:bitrate
+           #:duration
+           #:audio
+           #:next-song
+           #:next-song-id
+           #:status
+
+           #:statistics
+           #:uptime
+           #:play-time
+           #:artist
+           #:albums
+           #:songs
+           #:db-playtime
+           #:db-update
+           #:statistics)
 ;; Classes
 
 (defclass song ()
@@ -30,7 +82,7 @@
    (mix-ramp-db :initarg :mix-ramp-db :accessor mix-ramp-db)
    (state :initarg :state :accessor state)
    (song :initarg :song :accessor song)
-   (songid :initarg :songid :accessor songid)
+   (song-id :initarg :song-id :accessor song-id)
    (current-time :initarg :current-time :accessor current-time)
    (elapsed :initarg :elapsed :accessor elapsed)
    (bitrate :initarg :bitrate :accessor bitrate)

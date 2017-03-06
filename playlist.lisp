@@ -9,7 +9,7 @@
            #:playlist-delete-song-id
            #:playlist-move
            #:playlist-move-song-id
-           #:playlist-songs
+           #:playlist-song-list
            #:playlist-find-song
            #:playlist-song-id
            #:playlist-song-info
@@ -72,7 +72,7 @@
   is one)."
   (send-command socket "moveid" from to))
 
-(defun playlist-songs (socket)
+(defun playlist-song-list (socket)
   "Displays the current playlist."
   (send-command socket "playlist"))
 
@@ -85,11 +85,11 @@
   single song to display info for."
   (send-command socket "playlistid" song-id))
 
-(defun playlist-song-info (socket position)
+(defun playlist-song-info (socket &optional position)
   "Displays a list of all songs in the playlist, or if the optional argument is
   given, displays information only for the song SONGPOS or the range of songs
   START:END."
-  (send-command socket "playlistinfo" position))
+  (send-command socket "playlistinfo" (or position "")))
 
 (defun playlist-search-song (socket tag needle)
   "Searches case-insensitively for partial matches in the current playlist."
