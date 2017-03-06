@@ -18,7 +18,7 @@
            #:duration
            #:position
            #:id
-           #:current-song
+           #:query-song
 
            #:status
            #:volume
@@ -39,7 +39,7 @@
            #:audio
            #:next-song
            #:next-song-id
-           #:status
+           #:query-status
 
            #:statistics
            #:uptime
@@ -49,8 +49,9 @@
            #:songs
            #:db-playtime
            #:db-update
-           #:statistics)
-;; Classes
+           #:query-statistics))
+
+(in-package :mpd.query)
 
 (defclass song ()
   ((filename :initarg :filename :accessor filename)
@@ -100,7 +101,7 @@
    (db-playtime :initarg :db-playtime :accessor db-playtime)
    (db-update :initarg :db-update :accessor db-update)))
 
-(defun current-song (socket)
+(defun query-song (socket)
   "Returns an instance of the current song."
   (let ((song (response->plist (send-command socket "currentsong"))))
     (make-instance 'song
@@ -122,7 +123,7 @@
                    :position      (getf song 'position)
                    :id            (getf song 'id))))
 
-(defun status (socket)
+(defun query-status (socket)
   "Returns an instance of the current status."
   (let ((status (response->plist (send-command socket "status"))))
     (make-instance 'status
@@ -145,7 +146,7 @@
                    :next-song       (getf status 'next-song)
                    :next-song-id    (getf status 'next-song-id))))
 
-(defun statistics (socket)
+(defun query-statistics (socket)
   "Returns an instance of the current statistics."
   (let ((stats (response->plist (send-command socket "stats"))))
     (make-instance 'statistics

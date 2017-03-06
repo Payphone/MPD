@@ -116,7 +116,7 @@
            #:duration
            #:position
            #:id
-           #:current-song
+           #:query-song
 
            #:status
            #:volume
@@ -137,7 +137,7 @@
            #:audio
            #:next-song
            #:next-song-id
-           #:status
+           #:query-status
 
            #:statistics
            #:uptime
@@ -147,7 +147,7 @@
            #:songs
            #:db-playtime
            #:db-update
-           #:statistics
+           #:query-statistics
 
            ;; Misc
            #:mount
