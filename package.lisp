@@ -1,12 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:mpd
-  (:use #:cl
-        #:mpd.connection
-        #:mpd.playback
-        #:mpd.playlist
-        #:mpd.database
-        #:mpd.misc)
+  (:use #:cl #:iolib)
   (:export ;; Connection Settings
            #:response->plist
            #:initialize-connection
@@ -171,7 +166,7 @@
            #:internal-url-handler-list
            #:internal-decoder-list
            #:client-subscribe
-           #:client-unsubscribe
+           #:clibent-unsubscribe
            #:client-channel-list
            #:client-read-message-list
            #:client-send-message))

@@ -6,10 +6,10 @@
   :license "MIT"
   :depends-on (#:iolib #:split-sequence)
   :serial t
-  :components ((:file "connection")
+  :components ((:file "package")
+               (:file "connection")
                (:file "playback")
                (:file "playlist")
                (:file "database")
                (:file "query")
-               (:file "misc")
-               (:file "package")))
+               (:file "misc")))

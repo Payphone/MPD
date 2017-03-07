@@ -1,34 +1,6 @@
 ;;; misc.lisp
 
-(defpackage #:mpd.misc
-  (:use :cl :mpd.connection)
-  (:export #:mount
-           #:unmount
-           #:mount-list
-           #:neighbor-list
-           #:sticker-get
-           #:sticker-set
-           #:sticker-delete
-           #:sticker-list
-           #:sticker-find
-           #:partition-list
-           #:partition-new
-           #:output-disable
-           #:output-enable
-           #:output-toggle
-           #:output-list
-           #:internal-config
-           #:internal-command-list
-           #:internal-not-command-list
-           #:internal-url-handler-list
-           #:internal-decoder-list
-           #:client-subscribe
-           #:client-unsubscribe
-           #:client-channel-list
-           #:client-read-message-list
-           #:client-send-message))
-
-(in-package :mpd.misc)
+(in-package #:mpd)
 
 ;; Mounts and Neighbors
 

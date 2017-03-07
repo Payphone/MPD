@@ -1,42 +1,6 @@
 ;;; playlist.lisp
 
-(defpackage #:mpd.playlist
-  (:use #:cl #:mpd.connection)
-  (:export #:playlist-add-song
-           #:playlist-add-song-id
-           #:playlist-clear-songs
-           #:playlist-delete-song
-           #:playlist-delete-song-id
-           #:playlist-move
-           #:playlist-move-song-id
-           #:playlist-song-list
-           #:playlist-find-song
-           #:playlist-song-id
-           #:playlist-song-info
-           #:playlist-search-song
-           #:playlist-changes-song
-           #:playlist-changes-position-id
-           #:playlist-priority
-           #:playlist-priority-id
-           #:playlist-range-id
-           #:playlist-shuffle
-           #:playlist-swap
-           #:playlist-swap-id
-           #:playlist-add-tag-id
-           #:playlist-clear-tag-id
-           #:playlist-list-songs
-           #:playlist-list-info
-           #:playlist-list-playlists
-           #:playlist-load
-           #:playlist-add
-           #:playlist-clear
-           #:playlist-delete
-           #:playlist-move
-           #:playlist-rename
-           #:playlist-remove
-           #:playlist-save))
-
-(in-package :mpd.playlist)
+(in-package #:mpd)
 
 ;; Current Playlist
 
@@ -89,7 +53,7 @@
   "Displays a list of all songs in the playlist, or if the optional argument is
   given, displays information only for the song SONGPOS or the range of songs
   START:END."
-  (send-command socket "playlistinfo" (or position "")))
+  (response->plist (send-command socket "playlistinfo" (or position ""))))
 
 (defun playlist-search-song (socket tag needle)
   "Searches case-insensitively for partial matches in the current playlist."

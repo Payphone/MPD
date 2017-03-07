@@ -1,26 +1,6 @@
 ;;; connection.lisp
 
-(defpackage #:mpd.connection
-  (:use #:cl #:iolib)
-  (:export #:response->plist
-           #:initialize-connection
-           #:close-connection
-           #:receive-command
-           #:OK
-           #:send-command
-           #:send-commands
-           #:kill
-           #:password
-           #:ping
-           #:tagtypes
-           #:tagtypes-disable
-           #:tagtypes-enable
-           #:tagtypes-clear
-           #:tagtypes-all
-           #:idle
-           #:clear-error))
-
-(in-package :mpd.connection)
+(in-package #:mpd)
 
 (defparameter *mpd-errors*
   '((not-list       . 1)
@@ -73,7 +53,8 @@
                              :address-family :internet
                              :type :stream
                              :external-format '(:utf-8 :eol-style :crlf)
-                             :ipv6 nil))
+                             :ipv6 nil
+                             :keepalive t))
         (welcome "OK MPD "))
     (connect socket (lookup-hostname address) :port port :wait t :timeout 5)
     (values socket (string-left-trim welcome (read-line socket)))))

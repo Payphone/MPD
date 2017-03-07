@@ -1,23 +1,6 @@
 ;;; database.lisp
 
-(defpackage #:mpd.database
-  (:use #:cl #:mpd.connection)
-  (:export #:database-count
-           #:database-find
-           #:database-find-add
-           #:database-list
-           #:database-list-all
-           #:database-list-all-info
-           #:database-list-files
-           #:database-list-info
-           #:database-read-comments
-           #:database-search
-           #:database-search-add
-           #:database-search-add-playlist
-           #:database-update
-           #:database-rescan))
-
-(in-package :mpd.database)
+(in-package #:mpd)
 
 ;; The Music Database
 

@@ -1,27 +1,6 @@
 ;;; playback.lisp
 
-(defpackage #:mpd.playback
-  (:use #:cl #:mpd.connection)
-  (:export #:playback-consume
-           #:playback-crossfade
-           #:playback-mixrampdb
-           #:playback-mixrampdelay
-           #:playback-random
-           #:playback-set-volume
-           #:playback-single
-           #:replay-gain-mode
-           #:replay-gain-status
-           #:playback-next
-           #:playback-pause
-           #:playback-play
-           #:playback-play-id
-           #:playback-previous
-           #:playback-seek
-           #:playback-seek-id
-           #:playback-seek-current
-           #:playback-stop))
-
-(in-package :mpd.playback)
+(in-package #:mpd)
 
 ;; Utilties
 ;; MPD uses 1 and 0 to represent booleans
@@ -58,7 +37,7 @@
 
 (defun playback-set-volume (socket volume)
   "Sets the volume, the range of volume is 0-100."
-  (send-command socket "random" volume))
+  (send-command socket "setvol" volume))
 
 (defun playback-single (socket state)
   "Sets the single state to t or nil."
