@@ -86,7 +86,7 @@
                    :mix-ramp-db     (getf status (intern "MIX-RAMP-DB"))
                    :state           (getf status (intern "STATE"))
                    :song            (getf status (intern "SONG"))
-                   :songid          (getf status (intern "SONGID"))
+                   :song-id         (getf status (intern "SONGID"))
                    :current-time    (getf status (intern "CURRENT-TIME"))
                    :elapsed         (getf status (intern "ELAPSED"))
                    :bitrate         (getf status (intern "BITRATE"))

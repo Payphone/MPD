@@ -27,10 +27,11 @@
   "Creates a parameter list from a MPD response string. Since MPD returns items
   in the format 'type: content\n' it can be converted to a parameter list easily
   by interning the type and storing content as a string."
-  (loop for line in response
-     for item = (split-sequence:split-sequence #\colon line)
-     collect (intern (string-upcase (first item)))
-     collect (string-left-trim '(#\Space) (second item))))
+  (when (listp response)
+    (loop for line in response
+       for item = (split-sequence:split-sequence #\colon line)
+       collect (intern (string-upcase (first item)))
+       collect (string-left-trim '(#\Space) (second item)))))
 
 (defun response->error (error-response)
   "Generates a Common Lisp error from a MPD error. MPD errors are in the format
@@ -53,8 +54,7 @@
                              :address-family :internet
                              :type :stream
                              :external-format '(:utf-8 :eol-style :crlf)
-                             :ipv6 nil
-                             :keepalive t))
+                             :ipv6 nil))
         (welcome "OK MPD "))
     (connect socket (lookup-hostname address) :port port :wait t :timeout 5)
     (values socket (string-left-trim welcome (read-line socket)))))
