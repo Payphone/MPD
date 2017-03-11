@@ -14,10 +14,6 @@
            #:password
            #:ping
            #:tagtypes
-           #:tagtypes-disable
-           #:tagtypes-enable
-           #:tagtypes-clear
-           #:tagtypes-all
            #:idle
            #:clear-error
 

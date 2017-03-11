@@ -105,31 +105,6 @@
   "Shows a list of available tag types."
   (response->plist (send-command socket "tagtypes")))
 
-(defun tagtypes-disable (socket &rest tags)
-  "Remove one or more tags from the list of tag types the client is interested
-  in. These will be omitted from responses to this client."
-  (send-command socket "tagtypes disable" (format nil "~{~A ~}" tags)))
-
-(defun tagtypes-enable (socket &rest tags)
-  "Re-enable one or more tags from the list of tag types for this client. These
-  will no longer be hidden from responses to this client."
-  (send-command socket "tagtypes enable" (format nil "~{~A ~}" tags)))
-
-(defun tagtypes-clear (socket)
-  "Clear the list of tag types this client is interested in. This means that MPD
-  will not send any tags to this client."
-  (send-command socket "tagtypes clear"))
-
-(defun tagtypes-all (socket)
-  "Announce that this client is interested in all tag types."
-  (send-command socket "tagtypes all"))
-
-(defun idle (socket &rest subsystems)
-  "Waits until there is a noteworthy change on one or more of MPD's subsystems,
-  and returns the change as a parameter list."
-  (response->plist
-   (send-command socket "idle" (format nil "~{~A ~}" subsystems))))
-
 (defun clear-error (socket)
   "Clears the current error message in status."
   (send-command socket "clearerror"))
