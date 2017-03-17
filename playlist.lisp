@@ -7,7 +7,7 @@
 (defun playlist-add-song (socket uri)
   "Adds the file URI to the playlist (directories add recursively). URI can also
   be a single file."
-  (send-command socket "add" uri))
+  (send-command socket "add" (quote-string uri)))
 
 (defun playlist-add-song-id (socket uri &optional position)
   "Adds a song to the playlist (non-recursive) and returns the song id."
@@ -126,7 +126,7 @@
 (defun playlist-load (socket name &optional positions)
   "Loads the playlist into the current queue. Playlist plugins are supported. A
   range may be specified to load only a part of the playlist."
-  (send-command socket "load" name (or positions "")))
+  (send-command socket "load" (quote-string name) (or positions "")))
 
 (defun playlist-add (socket name uri)
   "Adds URI to the playlist NAME.m3u."

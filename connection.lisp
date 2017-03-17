@@ -23,6 +23,10 @@
   "Returns t if the sequence is empty."
   (if (= (length sequence) 0) t))
 
+(defun quote-string (string)
+  "Encloses a string in double quotes."
+  (concatenate 'string "\"" string "\""))
+
 (defun response->plist (response)
   "Creates a parameter list from a MPD response string. Since MPD returns items
   in the format 'type: content\n' it can be converted to a parameter list easily

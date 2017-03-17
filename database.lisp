@@ -45,7 +45,7 @@
   "Lists the contents of the directory URI, including files are not recognized
   by MPD."
   (response->plist
-   (send-command socket "listfiles" uri)))
+   (send-command socket "listfiles" (quote-string uri))))
 
 (defun database-list-info (socket uri)
   "Lists the contents of the directory URI."
