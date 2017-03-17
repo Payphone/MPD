@@ -11,7 +11,7 @@
 
 (defun playlist-add-song-id (socket uri &optional position)
   "Adds a song to the playlist (non-recursive) and returns the song id."
-  (send-command socket "addid" uri (or position "")))
+  (send-command socket "addid" (quote-string uri) (or position "")))
 
 (defun playlist-clear-songs (socket)
   "Clears the current playlist."

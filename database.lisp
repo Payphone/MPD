@@ -50,11 +50,11 @@
 (defun database-list-info (socket uri)
   "Lists the contents of the directory URI."
   (response->plist
-   (send-command socket "lsinfo" uri)))
+   (send-command socket "lsinfo" (quote-string uri))))
 
 (defun database-read-comments (socket uri)
   "Read 'comments' (i.e. key-value pairs) from the file specified by 'URI'."
-  (send-command socket "readcomments" uri))
+  (send-command socket "readcomments" (quote-string uri)))
 
 (defun database-search (socket type what &key sort-type positions)
   "Searches for any song that contains WHAT."
@@ -75,8 +75,8 @@
 (defun database-update (socket uri)
   "Updates the music database: find new files, remove deleted files, update
   modified files."
-  (send-command socket "update" uri))
+  (send-command socket "update" (quote-string uri)))
 
 (defun database-rescan (socket uri)
   "Same as update, but also rescans unmodified files."
-  (send-command socket "rescan" uri))
+  (send-command socket "rescan" (quote-string uri)))

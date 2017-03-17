@@ -24,26 +24,26 @@
 
 (defun sticker-get (socket type uri name)
   "Reads a sticker value for the specified object."
-  (send-command socket "sticker get" type uri name))
+  (send-command socket "sticker get" type (quote-string uri) name))
 
 (defun sticker-set (socket type uri name value)
   "Adds a sticker value to the specified object."
-  (send-command socket "sticker set" type uri name value))
+  (send-command socket "sticker set" type (quote-string uri) name value))
 
 (defun sticker-delete (socket type uri name)
   "Deletes a sticker value from the specified object."
-  (send-command socket "sticker delete" type uri name))
+  (send-command socket "sticker delete" type (quote-string uri) name))
 
 (defun sticker-list (socket type uri)
   "Lists the stickers for the specified object."
-  (send-command socket "sticker list" type uri))
+  (send-command socket "sticker list" type (quote-string uri)))
 
 (defun sticker-find (socket type uri name &optional value)
   "Searches the sticker database for stickers with the specified name, below the
   specified directory."
   (if value
-      (send-command socket "sticker find" uri name "=" value)
-      (send-command socket "sticker find" uri name)))
+      (send-command socket "sticker find" (quote-string uri) name "=" value)
+      (send-command socket "sticker find" (quote-string uri) name)))
 
 ;; Partition Commands
 
