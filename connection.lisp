@@ -34,7 +34,7 @@
   (when (listp response)
     (loop for line in response
        for item = (split-sequence:split-sequence #\colon line)
-       collect (intern (string-upcase (first item)))
+       collect (intern (string-upcase (first item)) "KEYWORD")
        collect (string-left-trim '(#\Space) (second item)))))
 
 (defun response->error (error-response)
