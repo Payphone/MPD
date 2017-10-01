@@ -38,7 +38,8 @@
 
 (defun playlist-song-list (socket)
   "Displays the current playlist."
-  (send-command socket "playlist"))
+  (response->plist (mapcar #'strip-numbered-response
+                           (send-command socket "playlist"))))
 
 (defun playlist-find-song (socket tag needle)
   "Finds songs in the current playlist with strict matching."

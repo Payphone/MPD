@@ -27,15 +27,19 @@
   "Encloses a string in double quotes."
   (concatenate 'string "\"" string "\""))
 
+(defun strip-numbered-response (response)
+  "Removes the position numbers from MPD responses."
+  (cl-ppcre:regex-replace-all "\\d+:" response ""))
+
 (defun response->plist (response)
   "Creates a parameter list from a MPD response string. Since MPD returns items
   in the format 'type: content\n' it can be converted to a parameter list easily
   by interning the type and storing content as a string."
   (when (listp response)
     (loop for line in response
-       for item = (split-sequence:split-sequence #\colon line)
-       collect (intern (string-upcase (first item)) "KEYWORD")
-       collect (string-left-trim '(#\Space) (second item)))))
+          for item = (cl-ppcre:split ": " line)
+          collect (intern (string-upcase (first item)) 'keyword)
+          collect (string-left-trim '(#\Space) (second item)))))
 
 (defun response->error (error-response)
   "Generates a Common Lisp error from a MPD error. MPD errors are in the format
@@ -112,3 +116,7 @@
 (defun clear-error (socket)
   "Clears the current error message in status."
   (send-command socket "clearerror"))
+
+(defun idle (socket system)
+  "Waits until the specified system records a change."
+  (send-command socket "idle" system))
